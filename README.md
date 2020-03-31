@@ -1,8 +1,8 @@
 # Adaptive CV (adcv) LaTeX class and template
 
-Adaptive CV allows to compile different variants of a CV (e.g., a résumé and an extended CV) from a single LaTeX source. It is particularly suitable for academic CVs but flexible enough to be used with any CVs.
+This is a modified version of Alessandro Rossini's [Adaptive CV](https://github.com/alessandrorossini/adcv) template.
 
-![Alessandro Rossini's CV](https://alessandrorossini.org/wp-content/cv_alessandro_rossini_en.png)
+Adaptive CV allows to compile different variants of a CV (e.g., a résumé and an extended CV) from a single LaTeX source. It is particularly suitable for academic CVs but flexible enough to be used with any CVs.
 
 ## Requirements
 
@@ -40,6 +40,13 @@ The `\adcvlanguagesfootnote{`*\<footnote number\>*`}{`*\<footnote text\>*`}` pri
 
 The `adcvpresentations` environment provides a presentation enumeration.  
 The `\adcvpresentation{`*\<title\>*`}{`*\<conference\>*`}` prints an item in the presentation enumeration with the title in the first row and the conference in the second row.
+
+### Additions
+
+I added the following commands:
+
+* \adcvgithub{`*\<URL\>*`}{`*\<link name\>*`}` for your GitHub profile
+* \adcvlinkedin{`*\<URL\>*`}{`*\<link name\>*`}` for your LinkedIn profile
 
 ## License
 

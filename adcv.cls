@@ -242,7 +242,7 @@
 
 % Geometry
 
-\RequirePackage[top=2cm,left=2cm,right=2cm,bottom=2cm]{geometry}
+\RequirePackage[top=2cm,left=2cm,right=2cm,bottom=2cm,a4paper]{geometry}
 
 \newlength\adcv@leftcol
 \newlength\adcv@centercol
@@ -253,8 +253,8 @@
 \newlength\adcv@langcol
 
 \setlength{\adcv@leftcol}{12em}
-\setlength{\adcv@rightcol}{9em}
-\setlength{\adcv@colsep}{1em}
+\setlength{\adcv@rightcol}{10em}
+\setlength{\adcv@colsep}{0.5em}
 \setlength{\adcv@centercol}{\textwidth}
 \addtolength{\adcv@centercol}{-\adcv@leftcol}
 \addtolength{\adcv@centercol}{-\adcv@rightcol}
@@ -274,19 +274,20 @@
 \RequirePackage{xcolor}
 
 \definecolor{white}{HTML}{FFFFFF}
-\definecolor{lightgray}{HTML}{999999}
-\definecolor{gray}{HTML}{555555}
-\definecolor{paynegray}{HTML}{353E49}
+\definecolor{lightgray}{HTML}{474747}
+\definecolor{gray}{HTML}{404040}
+% \definecolor{paynegray}{HTML}{353E49}
 \definecolor{black}{HTML}{000000}
-% \definecolor{paynegray}{HTML}{272F38}
-\definecolor{coralpink}{HTML}{FF706C}
+\definecolor{paynegray}{HTML}{272F38}
+% \definecolor{coralpink}{HTML}{FF706C}
+\definecolor{coralpink}{HTML}{FF3E3A}
 
 \ifprint
   \colorlet{regulartext}{black}
   \colorlet{headerfill}{white}
   \colorlet{headertext}{black}
-  \colorlet{lighttext}{gray}
-  \colorlet{linktext}{lightgray}
+  \colorlet{lighttext}{paynegray}
+  \colorlet{linktext}{coralpink}
 \else
   \colorlet{regulartext}{gray}
   \colorlet{headerfill}{paynegray}
@@ -362,6 +363,8 @@
 \newcommand*{\adcvphone}[1]{\def\adcv@phone{#1}}
 \newcommand*{\adcvemail}[3]{\def\adcv@emaillocal{#1}\def\adcv@emaildomainsecond{#2}\def\adcv@emaildomaintop{#3}}
 \newcommand*{\adcvwebsite}[2]{\def\adcv@websiteurl{#1}\def\adcv@websitetext{#2}}
+\newcommand*{\adcvgithub}[2]{\def\adcv@githuburl{#1}\def\adcv@gittext{#2}}
+\newcommand*{\adcvlinkedin}[2]{\def\adcv@linkedinurl{#1}\def\adcv@linkedintext{#2}}
 
 \graphicspath{{icons/}}
 
@@ -376,6 +379,8 @@
 \newcommand*{\chaticon}{\includegraphics[height=0.75em]{chat.pdf}}
 \newcommand*{\envelopeicon}{\includegraphics[height=0.75em]{envelope.pdf}}
 \newcommand*{\houseicon}{\includegraphics[height=0.75em]{house.pdf}}
+\newcommand*{\githubicon}{\includegraphics[height=0.75em]{github.pdf}}
+\newcommand*{\linkedinicon}{\includegraphics[height=0.75em]{linkedin.png}}
 \newcommand*{\phoneicon}{\includegraphics[height=0.75em]{phone.pdf}}
 \newcommand*{\placeicon}{\includegraphics[height=0.75em]{place.pdf}}
 
@@ -384,7 +389,8 @@
   \def\adcv@email{\envelopeicon~{\linktext\adcv@emaillocal\aticon\adcv@emaildomainsecond\doticon\adcv@emaildomaintop}}
   \def\adcv@telephone{}
 \else
-  \def\adcv@address{\placeicon~\adcv@street,~\adcv@postalcode~\adcv@locality,~\adcv@country}
+  %\def\adcv@address{\placeicon~\adcv@street,~\adcv@postalcode~\adcv@locality,~\adcv@country}
+  \def\adcv@address{\placeicon~\adcv@locality,~\adcv@country}
   \def\adcv@email{\envelopeicon~\href{mailto:\adcv@emaillocal @\adcv@emaildomainsecond.\adcv@emaildomaintop}{\adcv@emaillocal @\adcv@emaildomainsecond.\adcv@emaildomaintop}}
   \def\adcv@telephone{\phoneicon~\adcv@phone}
 \fi
@@ -411,14 +417,33 @@
   \else%
     \def\adcv@website{}%
   \fi%
+  \ifdefined\adcv@githuburl%
+  	\ifx\adcv@githuburl\empty%
+  		\def\adcv@github{}%
+  	\else%
+  		\def\adcv@github{\githubicon~\href{\adcv@githuburl}{\adcv@gittext}}%
+  	\fi%
+  \else%
+	\def\adcv@github{}%
+  \fi%
+  
+  \ifdefined\adcv@linkedinurl%
+  	\ifx\adcv@linkedinurl\empty%
+  		\def\adcv@linkedin{}%
+  	\else%
+  		\def\adcv@linkedin{\linkedinicon~\href{\adcv@linkedinurl}{\adcv@linkedintext}}%
+  	\fi%
+  \else%
+  	\def\adcv@linkedin{}%
+  \fi%
 
   \begin{center}%
     \ifonline%
-      \adcv@address~\adcv@email~\adcv@website%
+      \adcv@address~\adcv@email~\adcv@website~\adcv@linkedin~\adcv@github%
     \else%
       \adcv@address~\adcv@telephone%
 
-      \adcv@email~\adcv@website%
+      \adcv@email~\adcv@website~\adcv@linkedin~\adcv@github%
     \fi%
   \end{center}%
 }
@@ -454,6 +479,8 @@
 \setlength{\LTright}{0em}
 
 \newenvironment*{adcvtabletwo}{\begin{longtable}[l]{@{}>{\raggedright}p{\adcv@leftcentercol}@{\hspace{\adcv@colsep}} @{}>{\raggedleft}p{\adcv@rightcol}@{}}}{\end{longtable}}
+
+\newenvironment*{adcvtabletworev}{\begin{longtable}[l]{@{}>{\raggedleft}p{\adcv@leftcol}@{\hspace{\adcv@colsep}} @{}>{\raggedright}p{\adcv@centerrightcol}@{}}}{\end{longtable}}
 
 \newcommand*{\adcvrowtwo}[2]{#1 & #2\tabularnewline}
 \newcommand*{\adcvrowmulti}[1]{\multicolumn{2}{@{}p{\textwidth}}{\lighttext #1}\tabularnewline}
